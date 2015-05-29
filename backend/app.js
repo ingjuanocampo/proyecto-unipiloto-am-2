@@ -56,7 +56,6 @@ var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database("cordova.db");
 
 
-
 // Inicializando la base de datos
 db.serialize(function() {
 
@@ -114,14 +113,12 @@ db.serialize(function() {
 });
 
 
-
 //URLs a resolver
 app.get('/', function(req, res) {
 
     res.render('index', {'name':'Test App'});
 
 });
-
 
 
 // Manejo de errores en desarrollo
@@ -142,7 +139,6 @@ if ( app.get('env') === 'development' ) {
 }
 
 
-
 // uitilizando routes para resolver las URLs de la API
 var routes = require('./controllers/api')(app, db);
 
@@ -153,7 +149,6 @@ module.exports.cookie = '86d049d72a63027eb736fe9b7e240e28';
 
 // Exportanto el objeto "app" con todas sus configuraciones
 app.set('port', process.env.PORT || 7070);
-
 
 
 var server = app.listen(app.get('port'), function() {
