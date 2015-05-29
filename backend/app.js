@@ -10,10 +10,8 @@ var express = require('express')
     , cons = require('consolidate')
     , debug = require('debug')('app-final');
 
-
 // Instanciando aplicación
 var app = express();
-
 
 // tratamiento para el favicon -> no necesario para el ejercicio
 app.use(favicon());
@@ -103,7 +101,6 @@ db.serialize(function() {
                  'Telefono Móvil',
                  100.0,
                  567000.0);
-
 
           stmt.finalize();
       }

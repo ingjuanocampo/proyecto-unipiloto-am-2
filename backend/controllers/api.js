@@ -620,7 +620,7 @@ module.exports = function(app, db) {
                 req.body.price
             ],
 
-            function(rows, err) {
+            function( rows, err ) {
 
                 if(err){
                     // Cuando genera un error la consulta
@@ -682,7 +682,7 @@ module.exports = function(app, db) {
 
         res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
 
-        var stmt = db.prepare("UPDATE product SET name = ?, type = ?, quantity=?, price = ? WHERE id = ?");
+        var stmt = db.prepare("UPDATE product SET name = ?, type = ?, quantity = ?, price = ? WHERE id = ?");
 
         stmt.run(
             [
@@ -705,7 +705,9 @@ module.exports = function(app, db) {
 
                     db.get('SELECT * FROM product WHERE name = ?',
 
-                        [ req.body.name ],
+                        [
+                            req.body.name
+                        ],
 
                         function(err, rows) {
 
@@ -757,7 +759,7 @@ module.exports = function(app, db) {
 
         res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
 
-        var stmt = db.prepare("DELETE FROM product WHERE id = ?");
+        var stmt = db.prepare('DELETE FROM product WHERE id = ?');
 
         stmt.run(req.params.id);
 
