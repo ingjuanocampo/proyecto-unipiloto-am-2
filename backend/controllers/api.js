@@ -316,7 +316,11 @@ module.exports = function( app, db ) {
    // Actualizando un usuario, buscado por email y sin password
    var updateUser = function(req, res){
 
-        var stmt = db.prepare('UPDATE user SET firstname = ?, lastname = ?, phone = ?, password = ? WHERE email = ?');
+        var stmt = db.prepare('UPDATE user SET firstname = ?, ' +
+            'lastname = ?, ' +
+            'phone = ?, ' +
+            'password = ? ' +
+            'WHERE email = ?');
 
         stmt.run(
             [
@@ -426,7 +430,9 @@ module.exports = function( app, db ) {
 
            function(err, rows){
 
-               console.log('POST - update User with data = \n {' + '\n email : ' + req.params.email + '\n password : ' + req.body.password +'\n }');
+               console.log('POST - update User with data = \n {' +
+                   '\n email : ' + req.params.email +
+                   '\n password : ' + req.body.password +'\n }');
 
                /*
                 * Set de cabeceras para poder permitir acceso
