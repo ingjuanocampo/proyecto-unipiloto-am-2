@@ -3,11 +3,11 @@ var code = require('../app')
     , obj_to_xml = require('easyxml');
 
 
-module.exports = function(app, db) {
+module.exports = function( app, db ) {
     // --------------------------- API V1 para el modelo "User" --------------------------------------- //
 
     // Acceso al sistema
-    var loginUser = function(req, res){
+    var loginUser = function( req, res ) {
 
       console.log('POST - login users');
 
@@ -17,7 +17,7 @@ module.exports = function(app, db) {
               req.body.password
           ],
 
-          function(err, rows) {
+          function( err, rows ) {
 
             console.log('POST login user with email: ' + req.body.email);
              /*
@@ -25,22 +25,22 @@ module.exports = function(app, db) {
              * de peticiones AJAX de un request externo
              * en estw caso la App
              * */
-            res.header('Access-Control-Allow-Origin', '*');
-            res.header('Access-Control-Allow-Methods', 'POST');
-            res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, *');
+            res.header( 'Access-Control-Allow-Origin', '*' );
+            res.header( 'Access-Control-Allow-Methods', 'POST' );
+            res.header( 'Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, *' );
 
-            if(rows) {
+            if ( rows ) {
 
               // Agregando el cookie
               rows.cookie = code.cookie;
 
-              console.log(rows);
+              console.log( rows );
 
               // Adicionando a la cabecera `Content-Type` de `text/json`
-              res.header( 'Content-Type', 'application/json' ).send( rows );
+              res.header( 'Content-Type', 'application/json' ).json( rows );
 
             // Cuando ocurre algún error
-            } else if (err) {
+            } else if ( err ) {
 
               // Cuando genera un error la consulta
               res.header( 'Content-Type', 'application/json' ).send( { "error": err } );
@@ -59,10 +59,10 @@ module.exports = function(app, db) {
     // Buscando todos los usuarios y enviando la lista
     var findAllUsers = function( req, res ) {
 
-        console.log('GET - read all users');
+        console.log( 'GET - read all users' );
 
         // Query sobre todos los elementos de la tabla `user`
-        db.all('SELECT * FROM user', function(err, rows) {
+        db.all('SELECT * FROM user', function( err, rows ) {
 
             //Set sobre la cabecera de la peticion
             console.log('GET All Users');
@@ -72,11 +72,11 @@ module.exports = function(app, db) {
              * de peticiones AJAX de un request externo
              * en estw caso la App
              * */
-            res.header('Access-Control-Allow-Origin', '*');
+            res.header( 'Access-Control-Allow-Origin', '*' );
 
-            res.header('Access-Control-Allow-Methods', 'GET');
+            res.header( 'Access-Control-Allow-Methods', 'GET' );
 
-            res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, *');
+            res.header( 'Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, *' );
 
             // Si la consulta es correcta
             if( rows ) {
@@ -89,11 +89,11 @@ module.exports = function(app, db) {
 
                             // Verificando los elementos que entrega el query
                             console.log(row.id + ": " + row.firstname);
-
+                            row.url = "http:127.0.0.1:7070/api/v1/user/" + row.email +"/find";
                         });
 
                     // Adicionando a la cabecera `Content-Type` de `text/json`
-                    res.header('Content-Type', 'application/json').send(rows);
+                    res.header('Content-Type', 'application/json').json(rows);
 
                 // Cuando el `request` contiene en la cabecera `application/xml`
                 } else if ( req.accepts('application/xml') ) {
@@ -125,7 +125,7 @@ module.exports = function(app, db) {
                     console.log(users);
 
                     // Adicionando a la cabecera `Content-Type` de `text/xml`
-                    res.set('Content-Type', 'application/xml');
+                    res.set( 'Content-Type', 'application/xml' );
                     // Enviando el DOM del query que genera la consulta
                     res.send(users);
 
@@ -170,27 +170,27 @@ module.exports = function(app, db) {
                 * de peticiones AJAX de un request externo
                 * en estw caso la App
                 * */
-               res.header('Access-Control-Allow-Origin', '*');
+               res.header( 'Access-Control-Allow-Origin', '*' );
 
-               res.header('Access-Control-Allow-Methods', 'GET');
+               res.header( 'Access-Control-Allow-Methods', 'GET' );
 
-               res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, *');
+               res.header( 'Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, *' );
 
                 if ( rows ) {
 
-                    console.log(rows);
+                    console.log( rows );
 
                     // Cuando el `request` contiene en la cabecera `application/json`
 
-                    if (req.accepts('application/json')) {
+                    if ( req.accepts( 'application/json' ) ) {
 
                         // Adicionando a la cabecera `Content-Type` de `text/json`
 
-                        res.header('Content-Type', 'text/json').send(rows);
+                        res.header( 'Content-Type', 'text/json' ).json( rows );
 
 
                     // Cuando el `request` contiene en la cabecera `application/xml`
-                    } else if (req.accepts('application/xml')) {
+                    } else if ( req.accepts( 'application/xml' ) ) {
 
                         // Iterando sobre el query que entrega el driver de `SQLite`
                         rows.forEach(function (row) {
@@ -271,16 +271,16 @@ module.exports = function(app, db) {
                 * de peticiones AJAX de un request externo
                 * en estw caso la App
                 * */
-               res.header('Access-Control-Allow-Origin', '*');
+               res.header( 'Access-Control-Allow-Origin', '*' );
 
-               res.header('Access-Control-Allow-Methods', 'POST');
+               res.header( 'Access-Control-Allow-Methods', 'POST' );
 
-               res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, *');
+               res.header( 'Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, *' );
 
                if(err) {
 
                     // Cuando genera un error la consulta
-                    res.header('Content-Type', 'application/json').send({"error":err});
+                    res.header( 'Content-Type', 'application/json' ).send( { "error": err } );
 
                } else {
 
@@ -295,7 +295,7 @@ module.exports = function(app, db) {
                               // Adicionando el cookie para la sesión de los usuarios
                               rows.cookie = code.cookie;
 
-                              res.header('Content-Type', 'application/json').send( rows );
+                              res.header('Content-Type', 'application/json').json( rows );
 
                             } else if (err) {
 
@@ -368,7 +368,7 @@ module.exports = function(app, db) {
 
                                 rows.cookie = code.cookie;
 
-                                res.header('Content-Type', 'application/json').send(rows);
+                                res.header('Content-Type', 'application/json').json(rows);
 
                             } else if (err) {
 
@@ -408,7 +408,7 @@ module.exports = function(app, db) {
 
        stmt.run(req.params.email);
 
-       res.header('Content-Type', 'application/json').send('Delete User: ' + req.params.email);
+       res.header('Content-Type', 'application/json').json({"delete_user": req.params.email});
    };
 
 
@@ -460,7 +460,7 @@ module.exports = function(app, db) {
 
                               rows.cookie = code.cookie;
 
-                              res.header('Content-Type', 'application/json').send(rows);
+                              res.header('Content-Type', 'application/json').json(rows);
 
                           } else if (err) {
 
@@ -504,8 +504,8 @@ module.exports = function(app, db) {
 
 // --------------------------- API V1 para el modelo "Product" --------------------------------------- //
 
-	// Buscando todos los productos y retornando
-	var findAllProducts = function(req, res){
+    // Buscando todos los productos y retornando
+    var findAllProducts = function(req, res){
 
         console.log("GET - read all Products");
 
@@ -530,20 +530,21 @@ module.exports = function(app, db) {
                 rows.forEach(function (row) {
 
                     console.log(row.id + ': ' + row.name);
+                    row.url = "http:127.0.0.1:7070/api/v1/product/" + row.id +"/find";
                 });
 
                 // Adicionando a la cabecera `Content-Type` de `application/json`
-                res.header('Content-Type', 'application/json').send(rows);
+                res.header( 'Content-Type', 'application/json' ).json( rows );
 
             // Cuando ocurre algún error
             } else if (err) {
 
                 // Cuando genera un error la consulta
-                res.header('Content-Type', 'application/json').send({"error":err});
+                res.header( 'Content-Type', 'application/json' ).send( { "error": err } );
 
             } else {
             // Error desconocido
-            res.header('Content-Type', 'application/json').send({"error":400});
+            res.header( 'Content-Type', 'application/json' ).send( { "error": 400 } );
           }
 
         });
@@ -576,13 +577,13 @@ module.exports = function(app, db) {
                 if (err) {
 
                     // Cuando genera un error la consulta
-                    res.header('Content-Type', 'application/json').send({"error":err});
+                    res.header( 'Content-Type', 'application/json' ).send( { "error": err } );
 
                 } else {
 
                     // Adicionando a la cabecera `Content-Type` de `application/json`
 
-                    res.header('Content-Type', 'application/json').send(rows);
+                    res.header( 'Content-Type', 'application/json' ).json( rows );
 
                 }
             });
@@ -649,7 +650,7 @@ module.exports = function(app, db) {
                                                                                 '\n price : ' + req.body.price +
                                                                             '\n }');
 
-                                res.header('Content-Type', 'application/json').send(rows);
+                                res.header( 'Content-Type', 'application/json' ).json( rows );
 
                             }
 
@@ -699,7 +700,7 @@ module.exports = function(app, db) {
                 if(err) {
 
                     // Cuando genera un error la consulta
-                    res.header('Content-Type', 'application/json').send({"error":err});
+                    res.header( 'Content-Type', 'application/json' ).send( { "error": err } );
 
                 } else {
 
@@ -720,7 +721,7 @@ module.exports = function(app, db) {
                                                                                   '\n price : ' + req.body.price +
                                                                               '\n }');
 
-                                res.header('Content-Type', 'application/json').send(rows);
+                                res.header( 'Content-Type', 'application/json' ).json( rows );
 
 
                             } else if (err) {
@@ -734,11 +735,8 @@ module.exports = function(app, db) {
                                 res.header('Content-Type', 'application/json').send({"error":400});
 
                             }
-
                         });
-
                 }
-
             });
   };
 
@@ -763,7 +761,7 @@ module.exports = function(app, db) {
 
         stmt.run(req.params.id);
 
-        res.header('Content-Type', 'application/json').send('Delete User: ' + req.params.id);
+        res.header( 'Content-Type', 'application/json' ).send( { 'delete_product ' :req.params.id } );
 
     };
 
