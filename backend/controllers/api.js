@@ -1,4 +1,4 @@
-'use strict';
+ 'use strict';
 var code = require('../app')
     , obj_to_xml = require('easyxml');
 

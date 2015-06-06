@@ -51,7 +51,7 @@ var sqlite3 = require("sqlite3").verbose();
 
 
 // Creación del documento phonegap.sqlite
-var db = new sqlite3.Database("cordova.db");
+var db = new sqlite3.Database(" .db");
 
 
 // Inicializando la base de datos
